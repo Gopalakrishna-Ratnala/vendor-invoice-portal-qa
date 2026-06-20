@@ -1,0 +1,86 @@
+{
+  "id": "shopeasy-dummyjson-env-001",
+  "name": "ShopEasy — DummyJSON QA Environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "https://dummyjson.com",
+      "type": "default",
+      "enabled": true,
+      "description": "DummyJSON live test environment — the stand-in for the ShopEasy test API"
+    },
+    {
+      "key": "username",
+      "value": "emilys",
+      "type": "default",
+      "enabled": true,
+      "description": "Seeded DummyJSON test user (equivalent to ShopEasy QA user)"
+    },
+    {
+      "key": "password",
+      "value": "emilyspass",
+      "type": "secret",
+      "enabled": true,
+      "description": "Password for the test user"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "default",
+      "enabled": true,
+      "description": "JWT Bearer token — auto-populated by the collection pre-request script after login"
+    },
+    {
+      "key": "tokenExpiry",
+      "value": "0",
+      "type": "default",
+      "enabled": true,
+      "description": "Unix timestamp (ms) when the token expires — managed by the pre-request script"
+    },
+    {
+      "key": "userId",
+      "value": "1",
+      "type": "default",
+      "enabled": true,
+      "description": "Known valid user ID in DummyJSON (user: Emily Johnson)"
+    },
+    {
+      "key": "productId",
+      "value": "1",
+      "type": "default",
+      "enabled": true,
+      "description": "Known valid product ID — overwritten by TC-P01-P after listing products"
+    },
+    {
+      "key": "cartId",
+      "value": "1",
+      "type": "default",
+      "enabled": true,
+      "description": "Known valid cart ID — overwritten by TC-C01-P after adding to cart"
+    },
+    {
+      "key": "invalidId",
+      "value": "99999",
+      "type": "default",
+      "enabled": true,
+      "description": "Clearly non-existent ID used for all negative 404 test cases"
+    },
+    {
+      "key": "newUserId",
+      "value": "",
+      "type": "default",
+      "enabled": true,
+      "description": "Populated by TC-A02-P (Register User)"
+    },
+    {
+      "key": "newUsername",
+      "value": "",
+      "type": "default",
+      "enabled": true,
+      "description": "Dynamically generated unique username for TC-A02-P — set by pre-request script"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2026-06-20T00:00:00.000Z",
+  "_postman_exported_using": "Postman/10.x (QA Excellence Assignment 2 — DummyJSON)"
+}
