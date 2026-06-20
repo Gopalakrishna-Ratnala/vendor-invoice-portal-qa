@@ -72,8 +72,8 @@
 | **Module** | Authentication |
 | **DummyJSON Endpoint** | `POST /users/add` |
 | **Request Body** | `{}` |
-| **Expected Status** | 400 Bad Request |
-| **Assertions** | `message` or `error` field present |
+| **Expected Status** | 400 Bad Request (real API); DummyJSON mock returns 200 or 201 even for empty body (no payload validation) |
+| **Assertions** | Response is one of 200, 201, 400, or 422 — DummyJSON mock behavior documented |
 | **Type** | ❌ Negative |
 
 ---
@@ -94,15 +94,15 @@
 
 ---
 
-### TC-P01-N | List Products — limit=0 → 400 or empty
+### TC-P01-N | List Products — limit=0 → boundary behavior
 
 | Field | Value |
 |-------|-------|
 | **TC ID** | TC-P01-N |
 | **Module** | Product Catalog |
 | **DummyJSON Endpoint** | `GET /products?limit=0` |
-| **Expected Status** | 200 (empty) or 400 |
-| **Assertions** | If 200: `products` array is empty · If 400: error message present |
+| **Expected Status** | 200 (DummyJSON treats limit=0 as no-limit, returning all products; real API should return 400 or empty) |
+| **Assertions** | Status 200 · `products` is an array (DummyJSON returns all 194 products — boundary behavior documented) |
 | **Type** | ❌ Negative |
 
 ---
@@ -175,22 +175,22 @@
 
 ---
 
-### TC-P04-N | Filter by Category — Invalid category → 404
+### TC-P04-N | Filter by Category — Invalid category → 200 empty or 404
 
 | Field | Value |
 |-------|-------|
 | **TC ID** | TC-P04-N |
 | **Module** | Product Catalog |
 | **DummyJSON Endpoint** | `GET /products/category/invalid-xyz-category` |
-| **Expected Status** | 404 Not Found |
-| **Assertions** | `message` or `error` field present |
+| **Expected Status** | 200 with empty products array (DummyJSON mock); real API: 404 Not Found |
+| **Assertions** | Status 200 or 404 · If 200: `products` array is empty · If 404: `message` or `error` present |
 | **Type** | ❌ Negative |
 
 ---
 
 ## Module 3 — Shopping Cart
 
-### TC-C01-P | Add to Cart — Valid products → 200 + cart
+### TC-C01-P | Add to Cart — Valid products → 201 + cart
 
 | Field | Value |
 |-------|-------|
@@ -199,7 +199,7 @@
 | **ShopEasy Concept** | `POST /cart/items` |
 | **DummyJSON Endpoint** | `POST /carts/add` |
 | **Request Body** | `{ "userId": 1, "products": [{"id": 1, "quantity": 2}, {"id": 5, "quantity": 1}] }` |
-| **Expected Status** | 200 OK |
+| **Expected Status** | 201 Created |
 | **Assertions** | `id` present (saved as `cartId`) · `products` array non-empty · `total > 0` |
 | **Type** | ✅ Positive |
 

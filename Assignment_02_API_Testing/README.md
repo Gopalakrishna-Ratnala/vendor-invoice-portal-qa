@@ -64,7 +64,7 @@ This assignment implements the **ShopEasy API Automation Challenge** from the QA
 
 **Test chaining:** `productId` from TC-P01 is saved and passed to TC-P02. `cartId` from TC-C01 is saved for TC-C02. All managed via `pm.collectionVariables`.
 
-**Collection-level guards:** Every request is checked for response time (`< 3000ms`) and `Content-Type: application/json`.
+**Collection-level guards:** Every request is checked for response time (`< 5000ms`) and `Content-Type: application/json`.
 
 ---
 

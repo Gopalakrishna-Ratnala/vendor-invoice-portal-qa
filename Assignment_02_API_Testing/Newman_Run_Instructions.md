@@ -40,11 +40,11 @@ cd /path/to/vendor-invoice-portal-qa/Assignment_02_API_Testing
 Run Newman with the HTML reporter:
 
 ```bash
-newman run ShopEasy_Collection.json \
-  -e ShopEasy_Environment.json \
+newman run ShopEasy_DummyJSON_Collection.json \
+  -e ShopEasy_DummyJSON_Environment.json \
   --reporters cli,htmlextra \
-  --reporter-htmlextra-export newman-report.html \
-  --reporter-htmlextra-title "ShopEasy API Test Report" \
+  --reporter-htmlextra-export report.html \
+  --reporter-htmlextra-title "ShopEasy API Test Report — Gopalakrishna Ratnala" \
   --reporter-htmlextra-darkTheme
 ```
 
@@ -56,13 +56,13 @@ After the run completes, open the generated report:
 
 ```bash
 # macOS
-open newman-report.html
+open report.html
 
 # Windows
-start newman-report.html
+start report.html
 
 # Linux
-xdg-open newman-report.html
+xdg-open report.html
 ```
 
 The HTML report shows:
@@ -77,9 +77,9 @@ The HTML report shows:
 
 | Flag | Purpose |
 |------|---------|
-| `-e ShopEasy_Environment.json` | Load environment variables |
+| `-e ShopEasy_DummyJSON_Environment.json` | Load environment variables |
 | `--reporters cli,htmlextra` | Output to terminal AND HTML |
-| `--reporter-htmlextra-export newman-report.html` | HTML report file path |
+| `--reporter-htmlextra-export report.html` | HTML report file path |
 | `--reporter-htmlextra-title "..."` | Custom report title |
 | `--reporter-htmlextra-darkTheme` | Dark theme for the report |
 | `--delay-request 500` | Add 500ms delay between requests (useful for rate-limited APIs) |
@@ -91,11 +91,11 @@ The HTML report shows:
 ## Running with Delay (for Rate-Limited Environments)
 
 ```bash
-newman run ShopEasy_Collection.json \
-  -e ShopEasy_Environment.json \
+newman run ShopEasy_DummyJSON_Collection.json \
+  -e ShopEasy_DummyJSON_Environment.json \
   --delay-request 500 \
   --reporters cli,htmlextra \
-  --reporter-htmlextra-export newman-report.html
+  --reporter-htmlextra-export report.html
 ```
 
 ---
@@ -129,17 +129,17 @@ jobs:
 
       - name: Run ShopEasy API Tests
         run: |
-          newman run Assignment_02_API_Testing/ShopEasy_Collection.json \
-            -e Assignment_02_API_Testing/ShopEasy_Environment.json \
+          newman run Assignment_02_API_Testing/ShopEasy_DummyJSON_Collection.json \
+            -e Assignment_02_API_Testing/ShopEasy_DummyJSON_Environment.json \
             --reporters cli,htmlextra \
-            --reporter-htmlextra-export newman-report.html
+            --reporter-htmlextra-export report.html
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v3
         if: always()
         with:
           name: newman-html-report
-          path: newman-report.html
+          path: report.html
 ```
 
 ---
@@ -158,13 +158,13 @@ When all tests pass, Newman prints:
 ├─────────────────────────┼────────────────────┼────────────────────┤
 │            test-scripts │                 48 │                  0 │
 ├─────────────────────────┼────────────────────┼────────────────────┤
-│      prerequest-scripts │                 26 │                  0 │
+│      prerequest-scripts │                 25 │                  0 │
 ├─────────────────────────┼────────────────────┼────────────────────┤
-│              assertions │                 72 │                  0 │
+│              assertions │                112 │                  0 │
 ├─────────────────────────┴────────────────────┴────────────────────┤
-│ total run duration: ~8s                                           │
-│ total data received: ~12kb                                        │
-│ average response time: ~145ms                                     │
+│ total run duration: ~6s                                           │
+│ total data received: ~25kb                                        │
+│ average response time: ~200ms                                     │
 └───────────────────────────────────────────────────────────────────┘
 ```
 
@@ -175,9 +175,9 @@ When all tests pass, Newman prints:
 | Issue | Solution |
 |-------|---------|
 | `newman: command not found` | Run `npm install -g newman` again; check PATH |
-| `Error: connect ECONNREFUSED` | Test environment is down; check `baseUrl` in environment file |
-| Token errors on all requests | Run TC-001 (Login) first, or check `loginEmail`/`loginPassword` in environment |
-| `409` on register test | `qa_user@shopeasy.com` may already exist — this is expected for TC-004 |
+| `Error: connect ECONNREFUSED` | DummyJSON is down; check `https://dummyjson.com` is reachable |
+| Token errors on all requests | The pre-request script auto-fetches the token; check `username`/`password` variables in the environment file |
+| Response time assertion fails | DummyJSON cold-start can be slow; threshold is set to 5000ms to accommodate this |
 | HTML report not generated | Ensure `newman-reporter-htmlextra` is installed: `npm install -g newman-reporter-htmlextra` |
 
 ---
