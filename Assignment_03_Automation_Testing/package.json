@@ -1,0 +1,19 @@
+{
+  "name": "saucedemo-playwright-automation",
+  "version": "1.0.0",
+  "description": "QA Excellence Assignment 3 — Playwright E2E Automation (SauceDemo)",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:sanity": "npx playwright test --grep @sanity",
+    "test:regression": "npx playwright test --grep @regression",
+    "test:e2e": "npx playwright test --grep @e2e",
+    "test:headed": "npx playwright test --headed",
+    "test:slowmo": "npx playwright test --headed",
+    "report": "npx playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

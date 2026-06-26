@@ -1,0 +1,46 @@
+name: Playwright E2E Tests — SauceDemo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Assignment_03_Automation_Testing/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'Assignment_03_Automation_Testing/**'
+
+jobs:
+  playwright-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Assignment_03_Automation_Testing
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: Assignment_03_Automation_Testing/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npx playwright test --reporter=html
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-html-report
+          path: Assignment_03_Automation_Testing/playwright-report/
+          retention-days: 30

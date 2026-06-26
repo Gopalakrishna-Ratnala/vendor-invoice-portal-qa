@@ -1,0 +1,25 @@
+{
+  "valid": {
+    "firstName": "Gopalakrishna",
+    "lastName": "Ratnala",
+    "postalCode": "500081"
+  },
+  "missingFirstName": {
+    "firstName": "",
+    "lastName": "Ratnala",
+    "postalCode": "500081",
+    "expectedError": "Error: First Name is required"
+  },
+  "missingLastName": {
+    "firstName": "Gopalakrishna",
+    "lastName": "",
+    "postalCode": "500081",
+    "expectedError": "Error: Last Name is required"
+  },
+  "missingPostalCode": {
+    "firstName": "Gopalakrishna",
+    "lastName": "Ratnala",
+    "postalCode": "",
+    "expectedError": "Error: Postal Code is required"
+  }
+}
